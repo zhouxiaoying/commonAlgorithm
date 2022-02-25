@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function debunce(fn,delay){
+            var timeout = null;
+            return function(){
+                if(timeout !== null){
+                    clearTimeout(timeout)
+                }
+                timeout = setTimeout(fn,delay)
+            }
+        }
+
+
+        function throttle(fn,delay){
+            var timeout = null;
+            var prev = new Date()
+            return function(){
+                var _this = this
+                var cur = new Date()
+                var remain = delay - (cur-prev)
+                clearTimeout(timeout)
+                if(remain<=0){
+                    fn.call(_this,arguments)
+                    prev = new Date()
+                }else{
+                    timeout = setTimeout(fn,delay)
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function d1(fn,delay){
+            var timer = null
+            return function(){
+                if(timer !== null){
+                    clearTimeout(timer)
+                }
+                setTimeout(fn,delay)
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function t1(fn,delay){
+            var timer = null
+            var prev = new Date()
+            return function(){
+                var _this = this
+                var cur = new Date()
+                var remain = delay - (cur - prev)
+                clearTimeout(timer)
+                if(remain <= 0){
+                    fn.apply(_this,arguments)
+                    prev = new Date()
+                }else{
+                    setTimeout(fn,delay)
+                }
+            }
+        }
+    </script>
+</body>
+</html>
