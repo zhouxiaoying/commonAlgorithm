@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //只出现一次的数字
+        //多数元素  次数 > n/2
+        //m*n 矩阵  左到右  升序   上到下  升序   查找某个元素
+        //合并两个有序数组  nums1  m   nums2  n
+
+
+        function getOnceNum(arr){
+            let obj = {};
+            for(let i in arr){
+               obj[arr[i]]?obj[arr[i]] = parseInt(obj[arr[i]])+1:obj[arr[i]] = 1
+            }
+            console.log(obj);
+            let once = [];
+            let multi = [];
+            let len = Math.floor(arr.length/2);
+            for(let i in obj){
+                if(obj[i] == 1){
+                    once.push(i);
+                }
+
+                if(obj[i]>len){
+                    multi.push(i);
+                }
+            }
+            console.log(multi);
+            return once;
+        }
+        console.log(getOnceNum([1,2,2,11,1,2,2]));
+
+
+
+        function getNumFromMartix(matrix,target){
+            let flag = false;
+            let mlen = matrix.length;
+            let mllen = matrix[mlen-1].length;
+            for(let i in matrix){
+                let temp =  matrix[i];
+                if(target <= temp[mllen-1]){
+                    if(temp.indexOf(target)>-1){
+                        flag = true;
+                        return true
+                    }
+                }
+            }
+            console.log();
+            return flag
+        }
+        let matrix = [
+            [1,2,3],
+            [5,7,8],
+            [6,9,11],
+            [7,10,17],
+        ];
+        console.log(getNumFromMartix(matrix,17));
+
+
+
+        function contactSortArr(arr1,m,arr2,n){
+            let i = m+n-1;
+            let j = m-1;
+            let k = n-1;
+            while(k>=0){
+                if(arr2[k]>arr1[j]){
+                    arr1[i] = arr2[k]
+                    k--;
+                    i--;
+                    console.log(arr1);
+                }else{
+                    arr1[i] = arr1[j];
+                    j--;
+                    i--;
+                    console.log(arr1);
+                }
+            }
+            console.log(arr1);
+        }
+        let arr1 = [1,2,3,0,0,0];
+        let arr2 = [2,3,4];
+        console.log(contactSortArr(arr1,3,arr2,3));
+    </script>
+</body>
+</html>

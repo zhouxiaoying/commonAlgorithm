@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+          //扁平化  排序
+          let arr = [1,2,[4,1,6,2,[3,4,5]]]
+        function flatSort(arr){
+            let arr1 = arr.flat(Infinity)
+            // console.log(arr1);
+            arr1.sort((a,b)=>{return a - b})
+            // console.log(arr1);
+            return arr1
+        }
+        // let arr123 = flatSort(arr);
+        // console.log(arr123);
+
+
+        function flat1(arr){
+            return arr.reduce((cur,item)=>{
+                // return cur.concat(Array.isArray(item)?flat1(item):item)
+                if(Array.isArray(item)){
+                    return cur.concat(flat1(item))
+                }else{
+                    return cur.concat(item);
+                }
+            },[])
+        }
+        let arr123 = flat1(arr);
+        // console.log(arr123);
+
+
+        //reduce  去重
+        function uniqueByReduce(arr){
+            let arr1 = arr.reduce((cur,item)=>{
+                return cur.includes(item)?cur:cur.concat(item)
+            },[])
+            return arr1
+        }
+
+        //filter去重
+        function uniqueByFilter(arr22){
+            let arr1 = arr22.filter((item,index,arr)=>{
+                return arr.indexOf(item) === index
+            })
+            return arr1
+        }
+
+        let testuniquereduce = [1,1,2,2,2,3,4,5]
+        // console.log(uniqueByReduce(testuniquereduce));
+        // console.log(uniqueByFilter(testuniquereduce));
+    </script>
+</body>
+</html>

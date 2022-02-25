@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var lilei = {
+            sname:'lilei',
+            sage:11,
+            intr:function(){
+                // debugger
+                // console.log(`我是${this.sname},我已经${this.sage}`);
+            }
+        }
+        lilei.intr();
+
+        var param = new Array();
+        param['key1']  = 1;
+        param['key2']  = 2;
+        param['key3']  = 3;
+        // console.log(param.length);
+        //关联数组
+        //命名索引的数组
+        //具有命名索引的数组被称为关联数组（或者散列）
+        //javascript不支持命名索引的数组
+        //在javascript中，数组只能使用数字索引
+        //如果使用命名索引，javascript会把数组重定义为标准对象
+        //所有的数组的方法和属性将产生不正确的结果
+        //.length  返回0   以数字索引访问param[0]  undefined
+        //数组是特殊类型的对象  数字索引
+        let arr1 = new Array(40);
+        // console.log(arr1);
+        // console.log(new Array(40,100));
+        // console.dir(arr1.constructor.toString());
+        // console.dir(arr1 instanceof Array);
+        // console.dir(Array.prototype.toString.call(arr1));
+        // console.dir(Array.prototype);
+        // console.dir(Object.prototype);
+
+        //new四件事
+        //1、创建空对象
+        //2、绑定this指向该空对象
+        //3、执行构造函数，为空对象增加属性
+        //4、返回该对象
+        let arr2 = [1,2,3]
+        // arr2.shift()
+        // arr2.push(4)
+        // arr2.pop()
+        arr2.unshift(4)
+        // console.log(arr2);
+
+        function myNew(){
+            let obj = new Object();
+            Constructor = [].shift.call(arguments)
+            obj.__proto__ = Constructor.prototype
+            let res = Constructor.apply(obj,arguments)
+            return obj
+
+        }
+        function Person(name,age){
+            this.name = name
+            this.age = age
+        }
+        Person.prototype.length = 1;
+        Person.prototype.intr1 = function(){
+            // console.log(`${this.name}-----${this.age}`)
+        }
+        let pp = myNew(Person,'哈哈', 44)
+        // console.dir(pp);
+        pp.intr1()
+
+        Array.prototype
+        String.prototype
+
+
+        //原型链  多级父对象逐级继承形成的链式结构  就近原则
+
+        //this的情况  谁调用 就值谁
+        //1、obj.fun()  fun里面this是obj
+        //2、new Fun()   Fun中的this新创建的对象
+        //3、原型对象中的this  指未来调用的子对象
+        //4、匿名函数  window strict  undefined
+        //5、button.click  当前dom对象
+        //6、vue  this指的是  当前vue对象
+        //7、箭头函数  this  最近的作用域的this
+        //8、call apply  bind
+
+
+        let testslice = [1,2,3].slice(1)
+        // console.log(testslice);
+        //手写bind
+        Function.prototype._bind = function(obj){
+            var fn = this;
+            var args = [].slice.call(arguments,1)
+            return function(){
+                var params = [].slice.call(arguments)
+                fn.apply(obj,args.concat(params))
+            }
+        }
+
+
+        //手写promise
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+    </script>
+</body>
+</html>
