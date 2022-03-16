@@ -145,6 +145,34 @@
         const str11 = 'aaa bbb cccc sss sssss'
         let test111 = getMaxLenChildStr(str11)
         console.log(test111);
+
+
+
+
+        //一亿个数据，在0,10之间，如何排序并  找到最多个数的数字
+        function sortBigData(str){
+            let arr = [0,0,0,0,0,0,0,0,0,0,0]
+            for(let i  = 0; i< str.length;i++){
+                let temp = str.charAt(i)
+                arr[(temp - 0)] += 1
+            }
+            console.log(arr);
+            const maxnum = Math.max(...arr)
+            console.log(maxnum);
+            let maxindex = 0;
+            let sss = arr.reduce((cur,curVal,curIndex,arr)=>{
+                if(curVal>cur){
+                    maxindex = curIndex
+                }
+                return Math.max(cur,curVal)
+            },0)
+            console.log(maxindex);
+            console.log(sss);
+
+        }
+        const str222 = '2345555566666999990001112223344455667789909877655443221123455678899'
+        sortBigData(str222)
+
     </script>
 </body>
 </html>
