@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>script async defer</title>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript">
+        $(window).on("load", function (e) {
+            console.log("WindowLoaded");
+        });
+        $(document).ready(function (e) {
+            console.log('DOMContentLoaded');
+        });
+ 
+    </script>
+    <!-- <script type="text/javascript" src="http://127.0.0.1:8081/test1"></script>
+    <script type="text/javascript" src="http://127.0.0.1:8081/test2"></script>
+    <script type="text/javascript" src="http://127.0.0.1:8081/test3"></script> -->
+    <!------
+test1:1 test1
+test2:1 test2
+test3:1 test3
+asyncAndDefer.html:24 Inline script Loaded
+asyncAndDefer.html:13 DOMContentLoaded
+asyncAndDefer.html:10 WindowLoaded
+    -->
+
+    <!-- <script type="text/javascript" src="http://127.0.0.1:8081/test1" defer></script>
+    <script type="text/javascript" src="http://127.0.0.1:8081/test2" defer></script>
+    <script type="text/javascript" src="http://127.0.0.1:8081/test3" defer></script> -->
+    <!-----
+asyncAndDefer.html:36 Inline script Loaded
+test1:1 test1
+test2:1 test2
+test3:1 test3
+asyncAndDefer.html:13 DOMContentLoaded
+asyncAndDefer.html:10 WindowLoaded
+        ------->
+
+
+        <script type="text/javascript" src="http://127.0.0.1:8081/test1" async></script>
+        <script type="text/javascript" src="http://127.0.0.1:8081/test2" async></script>
+        <script type="text/javascript" src="http://127.0.0.1:8081/test3" async></script>
+        <!------
+asyncAndDefer.html:49 Inline script Loaded
+asyncAndDefer.html:13 DOMContentLoaded
+test3:1 test3
+test2:1 test2
+test1:1 test1
+asyncAndDefer.html:10 WindowLoaded
+            --------->
+</head>
+<body>
+    <h1>测试延迟和异步加载脚本</h1>
+    <script>
+        console.log("Inline script Loaded");
+    </script>
+</body>

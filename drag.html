@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app" style="width: 300px;height:300px;background-color: blue;position: relative;"></div>
+
+    <script>
+        function drag(){
+            const element = document.querySelector('#app')
+            console.log(element);
+            element.onmousedown = (e)=>{
+                const disX = e.clientX - element.offsetLeft
+                const disY = e.clientY - element.offsetTop
+                console.log(disX);
+                document.onmousemove = function(e){
+                    const l = e.clientX - disX
+                    const t = e.clientY - disY
+                    console.log(112233);
+                    console.log(`${l}px`);
+                    element.style.left = `${l}px`
+                    element.style.top = `${t}px`
+                }
+                document.onmouseup = function(e){
+                    document.onmousemove = null
+                    document.onmouseup = null
+                }
+            }
+        }
+        drag()
+
+        function drag11(ev){
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+        function allowDrop(ev){
+            ev.preventDefault();
+        }
+        function drop(ev){
+            ev.preventDefault();
+            var data=ev.dataTransfer.getData("Text");
+ev.target.appendChild(document.getElementById(data));
+        }
+    </script>
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="width: 500px;height:500px;background-color: yellow;"></div>
+
+<div id="drag1"  draggable="true" ondragstart="drag11(event)"  style="width: 300px;height:300px;background-color: red;">
+
+</body>
+</html>

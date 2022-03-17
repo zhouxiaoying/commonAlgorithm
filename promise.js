@@ -119,4 +119,39 @@ function resolvePromise(promise2,x,resolve,reject){
         resolve(x)
     }
 }
+
+
+
+function MyPromise(executor){
+    let _this = this
+    let status = 'pending'
+    let value = ''
+    let reason = ''
+    let onFulfilledArr = []
+    let onRejectArr = []
+    function resolve(val){
+        if(status === 'pending'){
+            status = 'fulfilled'
+            _this.value = val
+            onFulfilledArr.forEach(f=>f(val))
+        }
+    }
+    function reject(reason){
+        if(status === 'pending'){
+            status = 'rejected'
+            _this.reason = reason
+            onRejectArr.forEach(f=>f(reason))
+        }
+    }
+    try{
+        executor(resolve,reject)
+    }catch(e){
+        reject(e)
+    }
+
+
+}
+
+
+
 module.exports = Promise

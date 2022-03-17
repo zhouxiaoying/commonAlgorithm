@@ -282,6 +282,149 @@
         var target = flat(source);
         console.log(target);
 
+
+
+
+
+         //排序：冒泡 插入 选择 快速
+         const sortarrtest = [1,0,3,2,55,666,777,22,2,4]
+        function swap(arr,i,j){
+            [arr[i],arr[j]] = [arr[j],arr[i]]
+        }
+        function bubbleSort(arr){
+            for(let i = 0;i<arr.length;i++){
+                for(let j = i+1;j<arr.length;j++){
+                    if(arr[i]>arr[j]){
+                        // let temp = arr[i]
+                        // arr[i] = arr[j]
+                        // arr[j] = temp
+                        swap(arr,i,j)
+                    }
+                }
+            }
+            // console.log(arr);
+            return arr
+        }
+        //o(n^2)  o(1)
+        bubbleSort(sortarrtest);
+        //[0,3]
+        //1
+        //1,1
+        function insertSort(arr){
+            let preIndex = null;
+            let current = null;
+            for(let i = 1;i<arr.length;i++){
+                let preIndex = i-1;
+                let current = arr[i]
+                while(preIndex>=0 && current < arr[preIndex]){
+                    preIndex--
+                    arr[preIndex+1] = arr[preIndex]
+                }
+                //不满足条件了  是前一个位置
+                //preIndex  已经减了
+                arr[preIndex+1] = current
+                // console.log(arr);
+            }
+            // console.log(arr);
+            return arr
+        }
+        //o(n^2)   o(1)
+        insertSort(sortarrtest);
+
+        function quickSort(arr){
+            if (arr.length <= 1) { return arr; }
+            let len = arr.length
+            let middleIndex = Math.floor(arr.length/2);
+            let middle = arr.splice(middleIndex, 1)[0];
+            let leftarr = [];
+            let rightarr = []
+            // if(len<2){
+            //     return arr
+            // }
+            for(let i = 0;i<arr.length;i++){
+                if(arr[i]<middle){
+                    leftarr.push(arr[i])
+                }else{
+                    rightarr.push(arr[i])
+                }
+            }
+            return quickSort(leftarr).concat(middle,quickSort(rightarr))
+        }
+
+        let sss = [1,55,30,88,99,12]
+        let arrdddd = quickSort(sortarrtest)
+        console.log(arrdddd);
+
+        //选择最小值  交换位置
+        function selectSort(arr){
+            let len = arr.length
+            let minIndex,temp;
+            for(let i = 0;i<len-1;i++){
+                minIndex = i;
+                for(let j = i+1;j<len-1;j++){
+                    if(arr[j]<arr[i]){
+                        minIndex = j
+                    }
+                }
+                // temp = arr[i]
+                // arr[i] = arr[minIndex]
+                // arr[minIndex] = temp
+                swap(arr,i,minIndex)
+            }
+            console.log(arr)
+            return arr
+        }
+
+        selectSort('selectSort');
+        selectSort(sortarrtest);
+
+
+        //不断的分割成小块  最后拿出来
+        function mergeSort111(arr){
+            let len = arr.length
+            if(len<2){
+                return arr
+            }
+            let middle = Math.floor(len/2)
+            let left = arr.slice(0,middle)
+            let right = arr.slice(middle)
+            return merge111(mergeSort111(left),mergeSort111(right))
+        }
+
+        function merge111(left,right){
+            let res = [];
+            while(left.length>0 && right.length>0){
+                if(left[0]<=right[0]){
+                    res.push(left.shift())
+                }else{
+                    res.push(right.shift())
+                }
+            }
+            while(left.length){
+                res.push(left.shift())
+            }
+            while(right.length){
+                res.push(right.shift())
+            }
+            return res
+        }
+
+
+
+        let mergesss = mergeSort111(sortarrtest);
+        console.log('mergeSort')
+        console.log(mergesss)
+
+        // let testsplice = [1,2,3,4,5]
+        // // let testsplicell = testsplice.splice(0,3)
+        // let testsplicell22 = testsplice.slice(0,3)
+        // console.log(testsplice);
+        // // console.log(testsplicell);
+        // console.log(testsplicell22);
+
+        //shellsort
+
+
     </script>
 </body>
 </html>
