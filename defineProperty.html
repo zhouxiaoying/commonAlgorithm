@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        msg
+    </div>
+    <script>
+        //js 中怎么使 if(aﾠ==1 && a== 2 && ﾠa==3) 返回 true？
+        //一、
+        // let a = {
+        //     i: 1,
+        //     // toString: function () {
+        //     //     console.log(a);
+        //     //     return a.i++;
+        //     // }
+        // }
+        // console.log(a == 1 && a == 2 && a == 3);
+
+        //二、
+        // var val = 0;
+        // Object.defineProperty(window, 'a', {
+        //     get: function() {
+        //         return ++val;
+        //     }
+        // });
+        // console.log(a == 1 && a == 2 && a == 3);
+
+
+        //三、
+        // var a = new Proxy({ i: 0 }, {
+        //     // get: (target, name) => name === Symbol.toPrimitive ? () => ++target.i : target[name]
+        //     get:(target,name)=>{
+        //         name === Symbol.toPrimitive ? () => ++target.i : target[name]
+        //     }
+        // });
+        // console.log(a == 1 && a == 2 && a == 3);
+        
+            
+          
+        //响应式数据  Object.defineProperty  Proxy
+
+
+        // let state = {
+        //     s1:'123',
+        //     s2:'456'
+        // }
+        
+        // Object.keys(state).forEach((key)=>{
+        //     let val = state[key];
+        //     Object.defineProperty(state,key,{
+        //         get(){
+        //             return val
+        //         },
+        //         set(newVal){
+        //             val = newVal
+        //         }
+        //     })
+        // })
+
+
+
+        let data = {
+        msg: '你好'
+    }
+
+    //收集者
+    class Dep {
+        constructor() {
+            this.subs = []
+        }
+        addSub(watcher) {
+            this.subs.push(watcher)
+        }
+        notify() {
+            this.subs.forEach(w => w.update())
+        }
+    }
+    //观察者
+    class Watcher {
+        constructor(node, arg, callback) {
+            this.node = node
+            this.arg = arg
+            this.oldVal = this.getOldVal()
+            this.callback = callback
+        }
+        getOldVal() {
+            Dep.target = this
+            let oldVal = data[this.arg]
+            Dep.target = null
+            return oldVal
+        }
+        update() {
+            this.callback(data.msg)
+        }
+    }
+    class Render {
+        constructor() {
+            this.app = document.querySelector('#app')
+            this.arg = this.app.innerText
+            this.render()
+        }
+        render() {
+        	// 安排观察者监视数据
+            new Watcher(this.app, this.arg, (newVal) => {
+                this.app.innerText = newVal
+            })
+            this.app.innerText = data[this.arg]
+        }
+    }
+    //监听数据改变
+    class Observe {
+        constructor() {
+            this.init(data.msg)
+        }
+        init(value) {
+            let dep = new Dep() // 创建收集者
+            Object.defineProperty(data, 'msg', {
+                set(newVal) {
+                    if (newVal !== value) {
+                        value = newVal
+                        dep.notify() // 通知观察者
+                    }
+                },
+                get() {
+                    Dep.target && dep.addSub(Dep.target)  // 添加观察者
+                    return value
+                }
+            })
+        }
+    }
+    new Observe()
+    new Render()
+
+
+//1、首先我们先使用Object.defineProperty去监听所有数据，然后获取页面中的内容，看看页面有没有使用data中的属性，
+//如果有，就将对应的变量渲染成对应的值。
+//2、渲染的时候，我们要帮他创建一个观察者(watcher)，传入当前的dom节点、属性名、还有一个回调函数，
+//观察者内部就会获取参数的值，保存在oldval中。回调函数，就是当数据更新之后才触发的。
+//3、我们在获取oldVal，先为Dep.target设置为this，然后再获取oldVal，获取的时候就会触发get方法，
+//Dep.target有值就会添加进收集者（Dep）中，只会把Dep.target该成null，因为get方法会在很多时候触发，添加进收集者中，我就们就不要要添加了。
+//4、在值改变的时候，就会触发set()方法，dep.notify()就会通知它里面的观察者就进更新页面的操作，
+//watcher就会调用他们的callback函数更新页面。
+
+
+
+
+
+    </script>
+</body>
+</html>

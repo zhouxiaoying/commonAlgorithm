@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       function cloneDeep(target) {
+        if (typeof target !== "object" || target === null) {
+            return target;
+        }
+        if(Array.isArray(target)){
+            const cloneTarget = []
+            const targetKeys = Object.keys(target);
+            while (targetKeys.length > 0) {
+                const targetChildKey = targetKeys.shift();
+                cloneTarget[targetChildKey] = cloneDeep(target[targetChildKey]);
+            }
+            return cloneTarget;
+        }else if(target instanceof Function){
+            const fn = new Function("return " + target.toString())();
+            return fn
+        }else if(target instanceof Date){
+            const date = new Date();
+            date.setTime(target.getTime());
+            return date
+        }else if(target instanceof RegExp){
+            const Constructor = target.constructor;  //constructor 属性返回对创建此对象的数组函数的引用
+            return new Constructor(target)
+        }else if(target instanceof Boolean){
+            const Constructor = target.constructor;  //constructor 属性返回对创建此对象的数组函数的引用
+            return new Constructor(target)
+        }else if(target instanceof Object){
+            const cloneTarget = {}
+            const targetKeys = Object.keys(target);
+            while (targetKeys.length > 0) {
+                const targetChildKey = targetKeys.shift();
+                cloneTarget[targetChildKey] = cloneDeep(target[targetChildKey]);
+            }
+            return cloneTarget;
+        }
+        }
+
+        const testVal  = {
+            a: "1",
+            b: 2,
+            c: [1, 2, "asd", { a: { a: { a: [1, 2] } } }],
+            d: { a: 1, b: "2", c: [[[]]] },
+            e: null,
+            f: undefined,
+            g: true,
+            h:function(){alert(123)},
+            i:new Date(),
+            j:new RegExp(),
+            k:new Boolean(false)
+            };
+            let cloneObj = cloneDeep(testVal)
+
+            console.log(cloneObj);
+            console.log(Object.prototype.toString.call(cloneObj.h));
+            console.log((cloneObj.h).toString());
+            console.log(Object.prototype.toString.call(cloneObj.i));
+            console.log(Object.prototype.toString.call(cloneObj.j));
+            console.log(Object.prototype.toString.call(cloneObj.k));
+    </script>
+</body>
+</html>
