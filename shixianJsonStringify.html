@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let temp = {
+            s: 123,
+            arr: [1, 2, 3],
+            obj: {
+                ss: '1',
+                ss2: '2'
+            }
+        }
+
+        function myJsonStringify(obj) {
+            let res = []
+
+            function formate(s) {
+                if (typeof s == 'object' && s !== null) {
+                    return myJsonStringify(s)
+                } else {
+                    return s + ''
+                }
+            }
+            for (let i in obj) {
+                if(Array.isArray(obj)){
+                    res.push(formate(obj[i]))
+                }else{
+                    res.push(i + ':' + formate(obj[i]))
+                }
+            }
+            console.log(res.join());
+            return res.join()
+
+        }
+
+        function json2str(o) {
+            let arr = [];
+            const fmt = function (s) {
+                if (typeof s == 'object' && s !== null) return json2str(s);
+                return /^(string)$/.test(typeof s) ? `"${s}"` : s;
+            }
+            for (var i in o) arr.push(`"${i}":${fmt(o[i])}`) 
+            console.log(`{${arr.join(',')}}`);
+            return `{${arr.join(',')}}`
+        }
+        myJsonStringify(temp);
+        json2str(temp);
+    </script>
+</body>
+
+</html>

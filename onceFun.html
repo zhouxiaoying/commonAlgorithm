@@ -7,6 +7,25 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <script>
+        let once = function(fn){
+            let flag = true
+            return function(){
+                if(flag){
+                    flag = false
+                    fn.apply(this, arguments)
+                }
+            }
+            
+        }
+
+
+        let test = once(function(){
+            alert(123);
+        })
+        test()
+        test()
+
+    </script>
 </body>
 </html>
